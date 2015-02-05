@@ -190,7 +190,7 @@ namespace PopulateSqlData.ReadMeta
             Task.WaitAll(tasks);
             sw.Stop();
             var sp = new TimeSpan(sw.ElapsedTicks);
-            Log("Total generated records:{0}, total time: {1}", total, sp.ToString("g"));
+            Log("Total generated records:{0}, total time: {1}", total, sp.ToString("hh\\:mm\\:ss"));
         }
 
         public void Save2Sql(Table table, DataTable mDt)
