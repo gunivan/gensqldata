@@ -29,10 +29,10 @@ namespace PopulateSqlData
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.btnServer = new System.Windows.Forms.Button();
             this.gvData = new PopulateSqlData.MGridView();
@@ -63,8 +63,7 @@ namespace PopulateSqlData
             this.radGenNumStartWith = new System.Windows.Forms.RadioButton();
             this.numGenNumRandomTo = new System.Windows.Forms.NumericUpDown();
             this.numGenNumRandomFrom = new System.Windows.Forms.NumericUpDown();
-            this.btnTest = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grGenByDataColumn = new System.Windows.Forms.GroupBox();
             this.chkGenFromTable = new System.Windows.Forms.CheckBox();
             this.cbColumns = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -74,6 +73,10 @@ namespace PopulateSqlData
             this.Column = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.numGenRecords = new System.Windows.Forms.NumericUpDown();
             this.btnSave2Sql = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtTrace = new System.Windows.Forms.TextBox();
+            this.btnSelectData = new System.Windows.Forms.Button();
+            this.loadingColumns = new HaVaControl.LoadingCircle();
             ((System.ComponentModel.ISupportInitialize)(this.gvData)).BeginInit();
             this.grGenString.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenStringRandomTo)).BeginInit();
@@ -84,7 +87,7 @@ namespace PopulateSqlData
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumRandomTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumRandomFrom)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.grGenByDataColumn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenRecords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,37 +119,37 @@ namespace PopulateSqlData
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gvData.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(212)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gvData.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(212)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.gvData.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.gvData.Location = new System.Drawing.Point(384, 159);
+            this.gvData.Location = new System.Drawing.Point(883, 167);
             this.gvData.Name = "gvData";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(212)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
-            this.gvData.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(212)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.gvData.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.gvData.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.gvData.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.gvData.RowTemplate.Height = 26;
-            this.gvData.Size = new System.Drawing.Size(912, 237);
+            this.gvData.Size = new System.Drawing.Size(407, 230);
             this.gvData.TabIndex = 2;
             this.gvData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvData_ColumnHeaderMouseClick);
             // 
@@ -177,7 +180,7 @@ namespace PopulateSqlData
             this.loadingGrid.BackColor = System.Drawing.Color.Transparent;
             this.loadingGrid.Color = System.Drawing.Color.DarkTurquoise;
             this.loadingGrid.InnerCircleRadius = 5;
-            this.loadingGrid.Location = new System.Drawing.Point(745, 264);
+            this.loadingGrid.Location = new System.Drawing.Point(960, 319);
             this.loadingGrid.Name = "loadingGrid";
             this.loadingGrid.NumberSpoke = 12;
             this.loadingGrid.OuterCircleRadius = 11;
@@ -495,28 +498,18 @@ namespace PopulateSqlData
             0});
             this.numGenNumRandomFrom.MouseClick += new System.Windows.Forms.MouseEventHandler(this.numGenNumRandom_MouseClick);
             // 
-            // btnTest
+            // grGenByDataColumn
             // 
-            this.btnTest.Location = new System.Drawing.Point(245, 124);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(105, 29);
-            this.btnTest.TabIndex = 9;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.chkGenFromTable);
-            this.groupBox1.Controls.Add(this.cbColumns);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.cbTables);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(1098, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 112);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
+            this.grGenByDataColumn.Controls.Add(this.chkGenFromTable);
+            this.grGenByDataColumn.Controls.Add(this.cbColumns);
+            this.grGenByDataColumn.Controls.Add(this.label6);
+            this.grGenByDataColumn.Controls.Add(this.cbTables);
+            this.grGenByDataColumn.Controls.Add(this.label5);
+            this.grGenByDataColumn.Location = new System.Drawing.Point(1098, 4);
+            this.grGenByDataColumn.Name = "grGenByDataColumn";
+            this.grGenByDataColumn.Size = new System.Drawing.Size(198, 112);
+            this.grGenByDataColumn.TabIndex = 10;
+            this.grGenByDataColumn.TabStop = false;
             // 
             // chkGenFromTable
             // 
@@ -571,9 +564,9 @@ namespace PopulateSqlData
             this.Column});
             this.lvColumn.FullRowSelect = true;
             this.lvColumn.HideSelection = false;
-            this.lvColumn.Location = new System.Drawing.Point(242, 160);
+            this.lvColumn.Location = new System.Drawing.Point(242, 167);
             this.lvColumn.Name = "lvColumn";
-            this.lvColumn.Size = new System.Drawing.Size(136, 236);
+            this.lvColumn.Size = new System.Drawing.Size(136, 231);
             this.lvColumn.TabIndex = 11;
             this.lvColumn.UseCompatibleStateImageBehavior = false;
             this.lvColumn.View = System.Windows.Forms.View.Details;
@@ -590,14 +583,14 @@ namespace PopulateSqlData
             0,
             0,
             0});
-            this.numGenRecords.Location = new System.Drawing.Point(376, 129);
+            this.numGenRecords.Location = new System.Drawing.Point(296, 133);
             this.numGenRecords.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
             0,
             0});
             this.numGenRecords.Name = "numGenRecords";
-            this.numGenRecords.Size = new System.Drawing.Size(105, 20);
+            this.numGenRecords.Size = new System.Drawing.Size(82, 20);
             this.numGenRecords.TabIndex = 12;
             this.numGenRecords.ThousandsSeparator = true;
             this.numGenRecords.Value = new decimal(new int[] {
@@ -608,7 +601,7 @@ namespace PopulateSqlData
             // 
             // btnSave2Sql
             // 
-            this.btnSave2Sql.Location = new System.Drawing.Point(504, 123);
+            this.btnSave2Sql.Location = new System.Drawing.Point(385, 128);
             this.btnSave2Sql.Name = "btnSave2Sql";
             this.btnSave2Sql.Size = new System.Drawing.Size(105, 29);
             this.btnSave2Sql.TabIndex = 13;
@@ -616,16 +609,70 @@ namespace PopulateSqlData
             this.btnSave2Sql.UseVisualStyleBackColor = true;
             this.btnSave2Sql.Click += new System.EventHandler(this.btnSave2Sql_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(246, 136);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Records";
+            // 
+            // txtTrace
+            // 
+            this.txtTrace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTrace.Location = new System.Drawing.Point(384, 167);
+            this.txtTrace.Multiline = true;
+            this.txtTrace.Name = "txtTrace";
+            this.txtTrace.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtTrace.Size = new System.Drawing.Size(493, 230);
+            this.txtTrace.TabIndex = 15;
+            // 
+            // btnSelectData
+            // 
+            this.btnSelectData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSelectData.Location = new System.Drawing.Point(496, 128);
+            this.btnSelectData.Name = "btnSelectData";
+            this.btnSelectData.Size = new System.Drawing.Size(105, 29);
+            this.btnSelectData.TabIndex = 16;
+            this.btnSelectData.Text = "Load data";
+            this.btnSelectData.UseVisualStyleBackColor = true;
+            this.btnSelectData.Click += new System.EventHandler(this.btnSelectData_Click);
+            // 
+            // loadingColumns
+            // 
+            this.loadingColumns.Active = false;
+            this.loadingColumns.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.loadingColumns.BackColor = System.Drawing.Color.Transparent;
+            this.loadingColumns.Color = System.Drawing.Color.DarkTurquoise;
+            this.loadingColumns.InnerCircleRadius = 5;
+            this.loadingColumns.Location = new System.Drawing.Point(276, 279);
+            this.loadingColumns.Name = "loadingColumns";
+            this.loadingColumns.NumberSpoke = 12;
+            this.loadingColumns.OuterCircleRadius = 11;
+            this.loadingColumns.ParentAnchor = this;
+            this.loadingColumns.RotationSpeed = 100;
+            this.loadingColumns.Size = new System.Drawing.Size(41, 28);
+            this.loadingColumns.SpokeThickness = 2;
+            this.loadingColumns.StylePreset = HaVaControl.LoadingCircle.StylePresets.MacOSX;
+            this.loadingColumns.TabIndex = 17;
+            this.loadingColumns.Text = "loadingCircle2";
+            this.loadingColumns.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1302, 401);
+            this.Controls.Add(this.loadingColumns);
+            this.Controls.Add(this.btnSelectData);
+            this.Controls.Add(this.txtTrace);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.btnSave2Sql);
             this.Controls.Add(this.numGenRecords);
             this.Controls.Add(this.lvColumn);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnTest);
+            this.Controls.Add(this.grGenByDataColumn);
             this.Controls.Add(this.grGenNumber);
             this.Controls.Add(this.grGenDatetime);
             this.Controls.Add(this.grGenBit);
@@ -639,6 +686,7 @@ namespace PopulateSqlData
             this.ShowIcon = false;
             this.Text = "Populate Sql Data";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gvData)).EndInit();
             this.grGenString.ResumeLayout(false);
@@ -654,10 +702,11 @@ namespace PopulateSqlData
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumRandomTo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numGenNumRandomFrom)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grGenByDataColumn.ResumeLayout(false);
+            this.grGenByDataColumn.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenRecords)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -679,7 +728,6 @@ namespace PopulateSqlData
         private RadioButton radGenBitFalse;
         private RadioButton radGenBitTrue;
         private GroupBox grGenString;
-        private Button btnTest;
         private Label label3;
         private RadioButton radGenStringRandom;
         private RadioButton radGenStringCollections;
@@ -694,7 +742,7 @@ namespace PopulateSqlData
         private NumericUpDown numGenNumRandomTo;
         private NumericUpDown numGenNumRandomFrom;
         private Label label4;
-        private GroupBox groupBox1;
+        private GroupBox grGenByDataColumn;
         private ComboBox cbColumns;
         private Label label6;
         private ComboBox cbTables;
@@ -704,6 +752,10 @@ namespace PopulateSqlData
         private CheckBox chkGenFromTable;
         private NumericUpDown numGenRecords;
         private Button btnSave2Sql;
+        private Label label7;
+        private TextBox txtTrace;
+        private Button btnSelectData;
+        private HaVaControl.LoadingCircle loadingColumns;
     }
 }
 

@@ -11,23 +11,134 @@ using PopulateSqlData.ReadMeta;
 using PopulateSqlData.ReadMeta.Domain;
 using PopulateSqlData.ReadMeta.Domain.Column;
 using PopulateSqlData.ReadMeta.Domain.Setting;
+using System.IO;
+using System.Diagnostics;
+using HaVaData;
 namespace PopulateSqlData
 {
+
     public partial class Form1 : Form
     {
         PopulateManager manager = new PopulateManager();
         Table currentTable;
         ColumnBase currentColumn;
+        FormServer formServer;
+        List<GroupBox> groupList;
         public Form1()
         {
             InitializeComponent();
+            var txtWriter = new TextBoxWriter(txtTrace);
+            Console.SetOut(txtWriter);
+            var traceDebugOutput = new TextWriterTraceListener(txtWriter);
+            Trace.Listeners.Add(traceDebugOutput);
+            txtTrace.MakeDoubleBuffered(true);
+            groupList = new List<GroupBox>();
+            groupList.Add(grGenBit);
+            groupList.Add(grGenDatetime);
+            groupList.Add(grGenNumber);
+            groupList.Add(grGenString);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             loadingTable.ParentAnchor = treeView1;
             loadingGrid.ParentAnchor = gvData;
+            loadingColumns.ParentAnchor = lvColumn;
+            manager.LoadGenerateDatabase();
+            if (null == manager.generateDatabase)
+            {
+                Sql.Init(@".\SQLEXPRESS", "HaVa");
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(manager.generateDatabase.Username))
+                {
+                    Sql.Init(manager.generateDatabase.Server, manager.generateDatabase.Database);
+                }
+                else
+                {
+                    Sql.Init(manager.generateDatabase.Server, manager.generateDatabase.Database, manager.generateDatabase.Username, manager.generateDatabase.Password);
+                }
+            }
             LoadTable();
+        }
+
+
+        private void btnServer_Click(object sender, EventArgs e)
+        {
+            if (null == formServer)
+                formServer = new FormServer();
+            formServer.ShowDialog();
+            manager.StoreGenerateDatabase();
+            LoadTable();
+        }
+        private void btnSelectData_Click(object sender, EventArgs e)
+        {
+            LoadTempData(100);
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            treeView1_AfterCheck(sender, e);
+        }
+
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if (null == e.Node)
+                return;
+            LoadSelectedTable(e.Node);
+        }
+
+        private void LoadSelectedTable(TreeNode node)
+        {
+            if (node.Tag is Table)
+            {
+                var table = node.Tag as Table;
+                if (null != table)
+                {
+                    if (null != currentTable)
+                    {
+                        currentTable.MaxRecords = (int)numGenRecords.Value;
+                    }
+                    currentTable = table;
+                    Utils.VisibleLoading(loadingTable);
+                    manager.LoadSetting(table);
+                    if (node.Checked)
+                    {
+                        LoadColumns(table, node);
+                        manager.LoadSetting(table);
+                        LoadTempData();
+                    }
+                    else
+                    {
+                        foreach (TreeNode n in node.Nodes)
+                        {
+                            n.Checked = node.Checked;
+                        }
+                    }
+                    Utils.VisibleLoading(loadingTable, false);
+                }
+            }
+            else if (node.Tag is ColumnBase)
+            {
+                var column = node.Tag as ColumnBase;
+                if (null != column)
+                {
+                    column.IsGen = node.Checked;
+                }
+            }
+        }
+        void LoadTempData(int row = 0)
+        {
+            this.Execute(() =>
+            {
+                Utils.VisibleLoading(loadingGrid);
+                gvData.ExeInvoke(() =>
+                {
+                    gvData.DataSource = manager.LoadData(currentTable, row);
+                });
+                Utils.VisibleLoading(loadingGrid, false);
+            });
         }
         void LoadTable()
         {
@@ -45,6 +156,12 @@ namespace PopulateSqlData
                         var node = treeView1.Nodes.Add(table.Name, table.Name);
                         node.Tag = table;
                     }
+                    if (treeView1.Nodes.Count > 0)
+                    {
+                        treeView1.SelectedNode = treeView1.Nodes[0];
+                        treeView1.SelectedNode.Checked = true;
+                        LoadSelectedTable(treeView1.SelectedNode);
+                    }
                 });
                 Utils.VisibleLoading(loadingTable, false);
                 this.Execute(() =>
@@ -57,95 +174,55 @@ namespace PopulateSqlData
             });
         }
 
-        private void btnServer_Click(object sender, EventArgs e)
-        {
-            var f = new FormServer();
-            f.ShowDialog();
-            LoadTable();
-        }
-
-        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            if (null == e.Node)
-                return;
-            if (e.Node.Tag is Table)
-            {
-                var table = e.Node.Tag as Table;
-                if (null != table)
-                {
-                    currentTable = table;
-                    Utils.VisibleLoading(loadingTable);
-                    if (e.Node.Checked)
-                    {
-                        LoadColumns(table, e.Node);
-                        LoadDefaultData(table);
-                    }
-                    else
-                    {
-                        foreach (TreeNode node in e.Node.Nodes)
-                        {
-                            node.Checked = e.Node.Checked;
-                        }
-                        Utils.VisibleLoading(loadingTable, false);
-                    }
-                }
-            }
-            else if (e.Node.Tag is ColumnBase)
-            {
-                var column = e.Node.Tag as ColumnBase;
-                if (null != column)
-                {
-                    column.IsGen = e.Node.Checked;
-                }
-            }
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            treeView1_AfterCheck(sender, e);
-        }
         void LoadColumns(Table table, TreeNode parent)
         {
+            List<ColumnBase> columnList = new List<ColumnBase>();
             this.Execute(() =>
             {
-                var columnList = manager.LoadColumns(table);
-                lvColumn.ExeInvoke(() =>
+                Utils.VisibleLoading(loadingColumns);
+                Utils.VisibleLoading(loadingTable);
+                columnList = manager.LoadColumns(table);
+            }).ContinueWith((data) =>
+            {
+                numGenRecords.ExeInvoke(() =>
                 {
-                    lvColumn.Items.Clear();
+                    numGenRecords.Value = currentTable.MaxRecords < 0 ? 1000 : currentTable.MaxRecords;
                 });
-                treeView1.ExeInvoke(() =>
+                this.Execute(() =>
                 {
-                    treeView1.SuspendLayout();
-                    parent.Nodes.Clear();
-                    foreach (var col in columnList)
+                    treeView1.ExeInvoke(() =>
                     {
-                        var node = parent.Nodes.Add(col.Name, col.Name);
-                        node.Tag = col;
-                        node.Checked = true;
-                        lvColumn.ExeInvoke(() =>
+                        treeView1.SuspendLayout();
+                        parent.Nodes.Clear();
+                        foreach (var col in columnList)
                         {
-                            lvColumn.Items.Add(col.Name);
-                        });
-                    }
-                    parent.Expand();
-                    treeView1.ResumeLayout();
+                            var node = parent.Nodes.Add(col.Name, col.Name);
+                            node.Tag = col;
+                            node.Checked = true;
+                        }
+                        parent.Expand();
+                        treeView1.ResumeLayout();
+                    });
+                    Utils.VisibleLoading(loadingTable, false);
                 });
-                Utils.VisibleLoading(loadingTable, false);
+
+                this.Execute(() =>
+                {
+                    lvColumn.ExeInvoke(() =>
+                        {
+                            lvColumn.SuspendLayout();
+                            lvColumn.Items.Clear();
+                            foreach (var col in columnList)
+                            {
+                                lvColumn.Items.Add(col.Name);
+                            }
+                            lvColumn.ResumeLayout();
+                        });
+                    Utils.VisibleLoading(loadingColumns, false);
+                });
             });
         }
 
-        void LoadDefaultData(Table table)
-        {
-            this.Execute(() =>
-           {
-               Utils.VisibleLoading(loadingGrid);
-               gvData.ExeInvoke(() =>
-               {
-                   gvData.DataSource = manager.LoadDefaultData(table);
-               });
-               Utils.VisibleLoading(loadingGrid, false);
-           });
-        }
         private void gvData_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (null == currentTable)
@@ -175,6 +252,7 @@ namespace PopulateSqlData
         }
         void LoadGenInfor(Table table, ColumnBase column)
         {
+            EnableGroup(column.GenType);
             switch (column.GenType)
             {
                 case GenerateDataType.String:
@@ -219,7 +297,7 @@ namespace PopulateSqlData
                     }
                     break;
                 case GenerateDataType.Int:
-                case GenerateDataType.Long:                    
+                case GenerateDataType.Long:
                     {
                         var setting = column.Setting as GenNumSetting;
                         if (null != setting)
@@ -262,6 +340,42 @@ namespace PopulateSqlData
             }
         }
 
+        void EnableGroup(GenerateDataType genType)
+        {
+            var group = default(GroupBox);
+            switch (genType)
+            {
+                case GenerateDataType.String:
+                    group = grGenString;
+                    break;
+                case GenerateDataType.DateTime:
+                    group = grGenDatetime;
+                    break;
+                case GenerateDataType.Time:
+                    group = grGenDatetime;
+                    break;
+                case GenerateDataType.Int:
+                    group = grGenNumber;
+                    break;
+                case GenerateDataType.Long:
+                    group = grGenNumber;
+                    break;
+                case GenerateDataType.Bit:
+                    group = grGenBit;
+                    break;
+                case GenerateDataType.Uid:
+                    break;
+            }
+            if (null != group)
+            {
+                group.Enabled = true;
+                foreach (var gr in groupList)
+                {
+                    if (gr != group)
+                        gr.Enabled = false;
+                }
+            }
+        }
         void SaveColumnSetting(Table table, ColumnBase column)
         {
             if (null == column)
@@ -341,14 +455,14 @@ namespace PopulateSqlData
                     }
                     break;
                 case GenerateDataType.Uid:
-                    {                         
+                    {
                     }
                     break;
                 default:
                     break;
             }
         }
-       
+
         #region Set Radio Check
         private void txtGenString_MouseClick(object sender, MouseEventArgs e)
         {
@@ -401,7 +515,8 @@ namespace PopulateSqlData
                 lvColumn.Items.Add(item);
             }
         }
-        private void btnTest_Click(object sender, EventArgs e)
+
+        private void btnSave2Sql_Click(object sender, EventArgs e)
         {
             Utils.VisibleLoading(loadingGrid);
             this.Execute(() =>
@@ -410,23 +525,15 @@ namespace PopulateSqlData
             });
             this.Execute(() =>
             {
-                var table = manager.LoadDefaultData(currentTable);
-                gvData.ExeInvoke(() =>
-                {
-                    gvData.DataSource = table;
-                });
                 currentTable.MaxRecords = (int)numGenRecords.Value;
-                manager.GenerateData(currentTable, table);
+                manager.GenerateData(currentTable);
                 Utils.VisibleLoading(loadingGrid, false);
             });
         }
 
-        private void btnSave2Sql_Click(object sender, EventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Utils.VisibleLoading(loadingGrid);
-            manager.Save2Sql(currentTable, gvData.DataSource as DataTable);
-            Utils.VisibleLoading(loadingGrid, false);
+            manager.StoreGenerateDatabase();
         }
-
     }
 }

@@ -17,9 +17,6 @@ namespace PopulateSqlData
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Sql.Init(@".\SQLEXPRESS", "HaVa");
-
             Application.Run(new Form1());
         }
     }

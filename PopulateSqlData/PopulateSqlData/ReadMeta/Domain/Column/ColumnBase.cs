@@ -10,7 +10,7 @@ using PopulateSqlData.ReadMeta.Domain.Setting;
 
 namespace PopulateSqlData.ReadMeta.Domain.Column
 {
-    public abstract class ColumnBase
+    public class ColumnBase
     {
         private static Random random = new Random();
 

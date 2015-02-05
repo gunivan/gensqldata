@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PopulateSqlData.ReadMeta.Domain.Column
 {
+    [JsonObject]
     class ReferenceColumn : ColumnBase
     {
          [JsonProperty("cnst_name")]

@@ -40,7 +40,7 @@ namespace PopulateSqlData.ReadMeta.Utils
             LogUtils.Logs.Log("Begin load schemaTable");
             //Lấy ra tất cả bảng         
             var query = @"SELECT A.TABLE_NAME, B.CHILD FROM                 
-                (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES) A 
+                (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') A 
                 LEFT OUTER JOIN
                 (SELECT DISTINCT OBJECT_NAME(referenced_object_id) PARENT, 
                                OBJECT_NAME(parent_object_id) CHILD 

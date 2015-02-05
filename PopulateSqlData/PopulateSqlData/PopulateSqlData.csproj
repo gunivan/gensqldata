@@ -70,6 +70,7 @@
     <Compile Include="FormServer.Designer.cs">
       <DependentUpon>FormServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerateDatabase.cs" />
     <Compile Include="JsonUtils.cs" />
     <Compile Include="LoadingCircle.cs">
       <SubType>Component</SubType>
@@ -101,6 +102,7 @@
     <Compile Include="ReadMeta\PopulateManager.cs" />
     <Compile Include="ReadMeta\Utils\RandomUtils.cs" />
     <Compile Include="ReadMeta\Utils\SchemaUtils.cs" />
+    <Compile Include="TextBoxWriter.cs" />
     <Compile Include="UIThreadExtension.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Form1.resx">

@@ -24,8 +24,10 @@ namespace PopulateSqlData
                 }
                 using (var textWriter = new StreamWriter(fileName))
                 {
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(textWriter, obj, obj.GetType());
+                    textWriter.Write(JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings()
+                       {
+                           TypeNameHandling = TypeNameHandling.All
+                       }));
                 }
             });
 
@@ -47,11 +49,10 @@ namespace PopulateSqlData
             {
                 using (TextReader textReader = new StreamReader(fileName))
                 {
-                    using (var jsonReader = new JsonTextReader(textReader))
-                    {
-                        var serializer = new JsonSerializer();
-                        retVal = serializer.Deserialize<T>(jsonReader);
-                    }
+                    retVal = JsonConvert.DeserializeObject<T>(textReader.ReadToEnd(), new JsonSerializerSettings()
+                       {
+                           TypeNameHandling = TypeNameHandling.All
+                       });
                 }
             });
             Logs.Log("JsonUtils: End Load from file:" + fileName);
