@@ -200,7 +200,7 @@ namespace PopulateSqlData.ReadMeta
 
         public String GetSelectQuery(Table table, int record = 0)
         {
-            return String.Format("Select top {1} * From {0}", table.Name, record);
+            return String.Format("Select top {1} * From [{0}]", table.Name, record);
         }
 
         private void Log(string msg, params object[] param)
