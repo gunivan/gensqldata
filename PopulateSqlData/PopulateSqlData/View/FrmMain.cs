@@ -17,14 +17,15 @@ using HaVaData;
 namespace PopulateSqlData
 {
 
-    public partial class Form1 : Form
+    public partial class FrmMain : Form
     {
         PopulateManager manager = new PopulateManager();
+        SettingManager settingManager = new SettingManager();
         Table currentTable;
         ColumnBase currentColumn;
         FormServer formServer;
         List<GroupBox> groupList;
-        public Form1()
+        public FrmMain()
         {
             InitializeComponent();
             var txtWriter = new TextBoxWriter(txtTrace);
@@ -44,32 +45,20 @@ namespace PopulateSqlData
             loadingTable.ParentAnchor = treeView1;
             loadingGrid.ParentAnchor = gvData;
             loadingColumns.ParentAnchor = lvColumn;
-            manager.LoadGenerateDatabase();
-            if (null == manager.generateDatabase)
-            {
-                Sql.Init(@".\SQLEXPRESS", "HaVa");
-            }
-            else
-            {
-                if (String.IsNullOrEmpty(manager.generateDatabase.Username))
-                {
-                    Sql.Init(manager.generateDatabase.Server, manager.generateDatabase.Database);
-                }
-                else
-                {
-                    Sql.Init(manager.generateDatabase.Server, manager.generateDatabase.Database, manager.generateDatabase.Username, manager.generateDatabase.Password);
-                }
-            }
+            settingManager.Load();
             LoadTable();
         }
-
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            settingManager.StoreGenerateDatabase();
+        }
 
         private void btnServer_Click(object sender, EventArgs e)
         {
             if (null == formServer)
                 formServer = new FormServer();
             formServer.ShowDialog();
-            manager.StoreGenerateDatabase();
+            settingManager.StoreGenerateDatabase();
             LoadTable();
         }
         private void btnSelectData_Click(object sender, EventArgs e)
@@ -77,6 +66,20 @@ namespace PopulateSqlData
             LoadTempData(100);
         }
 
+        private void btnSave2Sql_Click(object sender, EventArgs e)
+        {
+            Utils.VisibleLoading(loadingGrid);
+            this.Execute(() =>
+            {
+                settingManager.StoreSetting(currentTable);
+            });
+            this.Execute(() =>
+            {
+                currentTable.MaxRecords = (int)numGenRecords.Value;
+                manager.GenerateData(currentTable);
+                Utils.VisibleLoading(loadingGrid, false);
+            });
+        }         
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             treeView1_AfterCheck(sender, e);
@@ -102,11 +105,10 @@ namespace PopulateSqlData
                     }
                     currentTable = table;
                     Utils.VisibleLoading(loadingTable);
-                    manager.LoadSetting(table);
+                    settingManager.LoadSetting(table);
                     if (node.Checked)
                     {
                         LoadColumns(table, node);
-                        manager.LoadSetting(table);
                         LoadTempData();
                     }
                     else
@@ -306,7 +308,7 @@ namespace PopulateSqlData
                             radGenNumStartWith.Checked = !setting.IsRandom;
                             numGenNumStart.Value = setting.Min;
                             numGenNumRandomFrom.Value = setting.Min;
-                            numGenNumRandomTo.Value = setting.Max;
+                            numGenNumRandomTo.Value = setting.Max;                            
                         }
                     }
                     break;
@@ -441,6 +443,7 @@ namespace PopulateSqlData
                                 setting.Min = numGenNumStart.Value;
                                 setting.Max += setting.Min + numGenRecords.Value;
                             }
+                            setting.NumType = column.GenType == GenerateDataType.Int ? typeof(Int32).ToString() : typeof(long).ToString();
                         }
                     }
                     break;
@@ -514,26 +517,6 @@ namespace PopulateSqlData
             {
                 lvColumn.Items.Add(item);
             }
-        }
-
-        private void btnSave2Sql_Click(object sender, EventArgs e)
-        {
-            Utils.VisibleLoading(loadingGrid);
-            this.Execute(() =>
-            {
-                manager.StoreSetting(currentTable);
-            });
-            this.Execute(() =>
-            {
-                currentTable.MaxRecords = (int)numGenRecords.Value;
-                manager.GenerateData(currentTable);
-                Utils.VisibleLoading(loadingGrid, false);
-            });
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            manager.StoreGenerateDatabase();
         }
     }
 }

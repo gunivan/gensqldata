@@ -16,34 +16,49 @@ namespace PopulateSqlData.ReadMeta.Domain.Column
 
         [JsonProperty("name")]
         public String Name { get; set; }
+
         [JsonProperty("type")]
         public ColumnType ColType { get; set; }
-        [JsonIgnore]
-        public Table Parent { get; set; }
+
         [JsonProperty("u_name")]
         public String UniqueName { get; set; }
+
         [JsonProperty("data_type")]
         public String DataTypeName { get; set; }
+
         [JsonProperty("max_len")]
         public int MaxLength { get; set; }
+
         [JsonProperty("can_null")]
         public Boolean CanNull { get; set; }
+
         [JsonProperty("num_precis")]
         public int NumPrecision { get; set; }
+
         [JsonProperty("num_precis_radix")]
         public int NumPrecisionRadix { get; set; }
+
         [JsonProperty("gen_type")]
         public GenerateDataType GenType { get; set; }
-        [JsonIgnore]
-        public Boolean IsGen { get; set; }
+
         [JsonProperty("setting")]
         public GenSetting Setting { get; set; }
+
+        [JsonIgnore]
+        public Table Parent { get; set; }
+
+        [JsonIgnore]
+        public Boolean IsGen { get; set; }
 
         [JsonIgnore]
         public object CurrentValue { get; set; }
 
         [JsonIgnore]
         public bool CanRestartSequence { get; set; }
+
+        [JsonIgnore]
+        public String RefColumns { get; set; }
+
         public virtual object NextValue()
         {
             object value = null;

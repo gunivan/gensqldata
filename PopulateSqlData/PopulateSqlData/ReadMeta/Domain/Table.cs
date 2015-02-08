@@ -30,6 +30,7 @@ namespace PopulateSqlData.ReadMeta.Domain
         {
             Children = new List<Table>();
             Columns = new List<ColumnBase>();
+            Level = 1;
         }
         public Table(String name)
             : this()
@@ -59,12 +60,22 @@ namespace PopulateSqlData.ReadMeta.Domain
         }
         public override string ToString()
         {
-            var children = new StringBuilder();
+            return JsonConvert.SerializeObject(this);
+        }
+        public void SetLevel()
+        {
             foreach (var table in Children)
             {
-                children.Append(table.Name + " ");
+                if (Level >= table.Level)
+                {
+                    table.Level = Level + 1;
+                }
+                if (table.Children.Count > 0)
+                {
+                    table.SetLevel();
+                }
+
             }
-            return String.Format("Name:{0}\r\n\tChildren:{1}", Name, children);
         }
     }
 }

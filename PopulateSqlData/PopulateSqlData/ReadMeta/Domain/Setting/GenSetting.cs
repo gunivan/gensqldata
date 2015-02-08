@@ -12,6 +12,15 @@ namespace PopulateSqlData.ReadMeta.Domain.Setting
     {      
         [JsonProperty("id_random")]
         [DefaultValue(true)]
-        public Boolean IsRandom { get; set; }        
+        public Boolean IsRandom { get; set; }
+
+        [JsonProperty("gen_based_table")]
+        public Boolean GenBasedTable { get; set; }
+
+        [JsonProperty("table_2_fetch")]
+        public String TableToFetch { get; set; }
+
+        [JsonProperty("col_2_fetch")]
+        public String ColumnToFetch { get; set; }
     }
 }

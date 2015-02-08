@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 namespace PopulateSqlData
 {
-    partial class Form1
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -77,6 +77,8 @@ namespace PopulateSqlData
             this.txtTrace = new System.Windows.Forms.TextBox();
             this.btnSelectData = new System.Windows.Forms.Button();
             this.loadingColumns = new HaVaControl.LoadingCircle();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.gvData)).BeginInit();
             this.grGenString.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenStringRandomTo)).BeginInit();
@@ -131,7 +133,7 @@ namespace PopulateSqlData
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.gvData.GridColor = System.Drawing.SystemColors.ControlLight;
-            this.gvData.Location = new System.Drawing.Point(883, 167);
+            this.gvData.Location = new System.Drawing.Point(883, 156);
             this.gvData.Name = "gvData";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -149,7 +151,7 @@ namespace PopulateSqlData
             this.gvData.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.gvData.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.gvData.RowTemplate.Height = 26;
-            this.gvData.Size = new System.Drawing.Size(407, 230);
+            this.gvData.Size = new System.Drawing.Size(407, 240);
             this.gvData.TabIndex = 2;
             this.gvData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvData_ColumnHeaderMouseClick);
             // 
@@ -195,6 +197,8 @@ namespace PopulateSqlData
             // 
             // grGenString
             // 
+            this.grGenString.Controls.Add(this.radioButton1);
+            this.grGenString.Controls.Add(this.textBox1);
             this.grGenString.Controls.Add(this.label3);
             this.grGenString.Controls.Add(this.radGenStringRandom);
             this.grGenString.Controls.Add(this.radGenStringCollections);
@@ -203,7 +207,7 @@ namespace PopulateSqlData
             this.grGenString.Controls.Add(this.numGenStringRandomFrom);
             this.grGenString.Controls.Add(this.txtGenStringCollections);
             this.grGenString.Controls.Add(this.txtGenStringIdentity);
-            this.grGenString.Location = new System.Drawing.Point(242, 4);
+            this.grGenString.Location = new System.Drawing.Point(938, -1);
             this.grGenString.Name = "grGenString";
             this.grGenString.Size = new System.Drawing.Size(356, 114);
             this.grGenString.TabIndex = 5;
@@ -213,7 +217,7 @@ namespace PopulateSqlData
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(224, 88);
+            this.label3.Location = new System.Drawing.Point(224, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(16, 13);
             this.label3.TabIndex = 8;
@@ -223,7 +227,7 @@ namespace PopulateSqlData
             // 
             this.radGenStringRandom.AutoSize = true;
             this.radGenStringRandom.Checked = true;
-            this.radGenStringRandom.Location = new System.Drawing.Point(14, 88);
+            this.radGenStringRandom.Location = new System.Drawing.Point(14, 65);
             this.radGenStringRandom.Name = "radGenStringRandom";
             this.radGenStringRandom.Size = new System.Drawing.Size(88, 17);
             this.radGenStringRandom.TabIndex = 7;
@@ -234,7 +238,7 @@ namespace PopulateSqlData
             // radGenStringCollections
             // 
             this.radGenStringCollections.AutoSize = true;
-            this.radGenStringCollections.Location = new System.Drawing.Point(14, 53);
+            this.radGenStringCollections.Location = new System.Drawing.Point(14, 40);
             this.radGenStringCollections.Name = "radGenStringCollections";
             this.radGenStringCollections.Size = new System.Drawing.Size(76, 17);
             this.radGenStringCollections.TabIndex = 6;
@@ -244,7 +248,7 @@ namespace PopulateSqlData
             // radGenStringIdentity
             // 
             this.radGenStringIdentity.AutoSize = true;
-            this.radGenStringIdentity.Location = new System.Drawing.Point(15, 21);
+            this.radGenStringIdentity.Location = new System.Drawing.Point(15, 18);
             this.radGenStringIdentity.Name = "radGenStringIdentity";
             this.radGenStringIdentity.Size = new System.Drawing.Size(85, 17);
             this.radGenStringIdentity.TabIndex = 5;
@@ -253,7 +257,7 @@ namespace PopulateSqlData
             // 
             // numGenStringRandomTo
             // 
-            this.numGenStringRandomTo.Location = new System.Drawing.Point(246, 85);
+            this.numGenStringRandomTo.Location = new System.Drawing.Point(246, 64);
             this.numGenStringRandomTo.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -271,7 +275,7 @@ namespace PopulateSqlData
             // 
             // numGenStringRandomFrom
             // 
-            this.numGenStringRandomFrom.Location = new System.Drawing.Point(109, 87);
+            this.numGenStringRandomFrom.Location = new System.Drawing.Point(109, 63);
             this.numGenStringRandomFrom.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -289,7 +293,7 @@ namespace PopulateSqlData
             // 
             // txtGenStringCollections
             // 
-            this.txtGenStringCollections.Location = new System.Drawing.Point(110, 53);
+            this.txtGenStringCollections.Location = new System.Drawing.Point(110, 40);
             this.txtGenStringCollections.Name = "txtGenStringCollections";
             this.txtGenStringCollections.Size = new System.Drawing.Size(241, 20);
             this.txtGenStringCollections.TabIndex = 1;
@@ -298,7 +302,7 @@ namespace PopulateSqlData
             // 
             // txtGenStringIdentity
             // 
-            this.txtGenStringIdentity.Location = new System.Drawing.Point(110, 21);
+            this.txtGenStringIdentity.Location = new System.Drawing.Point(110, 18);
             this.txtGenStringIdentity.Name = "txtGenStringIdentity";
             this.txtGenStringIdentity.Size = new System.Drawing.Size(241, 20);
             this.txtGenStringIdentity.TabIndex = 0;
@@ -310,7 +314,7 @@ namespace PopulateSqlData
             this.grGenBit.Controls.Add(this.radGenBitRandom);
             this.grGenBit.Controls.Add(this.radGenBitFalse);
             this.grGenBit.Controls.Add(this.radGenBitTrue);
-            this.grGenBit.Location = new System.Drawing.Point(604, 4);
+            this.grGenBit.Location = new System.Drawing.Point(242, -1);
             this.grGenBit.Name = "grGenBit";
             this.grGenBit.Size = new System.Drawing.Size(231, 36);
             this.grGenBit.TabIndex = 6;
@@ -355,7 +359,7 @@ namespace PopulateSqlData
             this.grGenDatetime.Controls.Add(this.label1);
             this.grGenDatetime.Controls.Add(this.dtpGenDateTimeTo);
             this.grGenDatetime.Controls.Add(this.dtpGenDateTimeFrom);
-            this.grGenDatetime.Location = new System.Drawing.Point(605, 42);
+            this.grGenDatetime.Location = new System.Drawing.Point(243, 40);
             this.grGenDatetime.Name = "grGenDatetime";
             this.grGenDatetime.Size = new System.Drawing.Size(230, 75);
             this.grGenDatetime.TabIndex = 7;
@@ -406,9 +410,9 @@ namespace PopulateSqlData
             this.grGenNumber.Controls.Add(this.radGenNumStartWith);
             this.grGenNumber.Controls.Add(this.numGenNumRandomTo);
             this.grGenNumber.Controls.Add(this.numGenNumRandomFrom);
-            this.grGenNumber.Location = new System.Drawing.Point(841, 4);
+            this.grGenNumber.Location = new System.Drawing.Point(477, -1);
             this.grGenNumber.Name = "grGenNumber";
-            this.grGenNumber.Size = new System.Drawing.Size(251, 112);
+            this.grGenNumber.Size = new System.Drawing.Size(251, 116);
             this.grGenNumber.TabIndex = 8;
             this.grGenNumber.TabStop = false;
             this.grGenNumber.Text = "Number";
@@ -416,7 +420,7 @@ namespace PopulateSqlData
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(173, 50);
+            this.label4.Location = new System.Drawing.Point(89, 76);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(16, 13);
             this.label4.TabIndex = 18;
@@ -433,6 +437,7 @@ namespace PopulateSqlData
             this.numGenNumStart.Name = "numGenNumStart";
             this.numGenNumStart.Size = new System.Drawing.Size(129, 20);
             this.numGenNumStart.TabIndex = 17;
+            this.numGenNumStart.ThousandsSeparator = true;
             this.numGenNumStart.Value = new decimal(new int[] {
             10,
             0,
@@ -464,15 +469,16 @@ namespace PopulateSqlData
             // 
             // numGenNumRandomTo
             // 
-            this.numGenNumRandomTo.Location = new System.Drawing.Point(195, 46);
+            this.numGenNumRandomTo.Location = new System.Drawing.Point(113, 72);
             this.numGenNumRandomTo.Maximum = new decimal(new int[] {
             1000000000,
             0,
             0,
             0});
             this.numGenNumRandomTo.Name = "numGenNumRandomTo";
-            this.numGenNumRandomTo.Size = new System.Drawing.Size(47, 20);
+            this.numGenNumRandomTo.Size = new System.Drawing.Size(129, 20);
             this.numGenNumRandomTo.TabIndex = 12;
+            this.numGenNumRandomTo.ThousandsSeparator = true;
             this.numGenNumRandomTo.Value = new decimal(new int[] {
             1000,
             0,
@@ -489,8 +495,9 @@ namespace PopulateSqlData
             0,
             0});
             this.numGenNumRandomFrom.Name = "numGenNumRandomFrom";
-            this.numGenNumRandomFrom.Size = new System.Drawing.Size(47, 20);
+            this.numGenNumRandomFrom.Size = new System.Drawing.Size(129, 20);
             this.numGenNumRandomFrom.TabIndex = 11;
+            this.numGenNumRandomFrom.ThousandsSeparator = true;
             this.numGenNumRandomFrom.Value = new decimal(new int[] {
             10,
             0,
@@ -505,9 +512,9 @@ namespace PopulateSqlData
             this.grGenByDataColumn.Controls.Add(this.label6);
             this.grGenByDataColumn.Controls.Add(this.cbTables);
             this.grGenByDataColumn.Controls.Add(this.label5);
-            this.grGenByDataColumn.Location = new System.Drawing.Point(1098, 4);
+            this.grGenByDataColumn.Location = new System.Drawing.Point(734, -1);
             this.grGenByDataColumn.Name = "grGenByDataColumn";
-            this.grGenByDataColumn.Size = new System.Drawing.Size(198, 112);
+            this.grGenByDataColumn.Size = new System.Drawing.Size(198, 115);
             this.grGenByDataColumn.TabIndex = 10;
             this.grGenByDataColumn.TabStop = false;
             // 
@@ -524,7 +531,7 @@ namespace PopulateSqlData
             // cbColumns
             // 
             this.cbColumns.FormattingEnabled = true;
-            this.cbColumns.Location = new System.Drawing.Point(49, 76);
+            this.cbColumns.Location = new System.Drawing.Point(49, 70);
             this.cbColumns.Name = "cbColumns";
             this.cbColumns.Size = new System.Drawing.Size(143, 21);
             this.cbColumns.TabIndex = 7;
@@ -532,7 +539,7 @@ namespace PopulateSqlData
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 79);
+            this.label6.Location = new System.Drawing.Point(6, 73);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 6;
@@ -564,9 +571,9 @@ namespace PopulateSqlData
             this.Column});
             this.lvColumn.FullRowSelect = true;
             this.lvColumn.HideSelection = false;
-            this.lvColumn.Location = new System.Drawing.Point(242, 167);
+            this.lvColumn.Location = new System.Drawing.Point(242, 156);
             this.lvColumn.Name = "lvColumn";
-            this.lvColumn.Size = new System.Drawing.Size(136, 231);
+            this.lvColumn.Size = new System.Drawing.Size(136, 241);
             this.lvColumn.TabIndex = 11;
             this.lvColumn.UseCompatibleStateImageBehavior = false;
             this.lvColumn.View = System.Windows.Forms.View.Details;
@@ -583,7 +590,7 @@ namespace PopulateSqlData
             0,
             0,
             0});
-            this.numGenRecords.Location = new System.Drawing.Point(296, 133);
+            this.numGenRecords.Location = new System.Drawing.Point(311, 126);
             this.numGenRecords.Maximum = new decimal(new int[] {
             -1530494976,
             232830,
@@ -601,7 +608,7 @@ namespace PopulateSqlData
             // 
             // btnSave2Sql
             // 
-            this.btnSave2Sql.Location = new System.Drawing.Point(385, 128);
+            this.btnSave2Sql.Location = new System.Drawing.Point(403, 120);
             this.btnSave2Sql.Name = "btnSave2Sql";
             this.btnSave2Sql.Size = new System.Drawing.Size(105, 29);
             this.btnSave2Sql.TabIndex = 13;
@@ -612,7 +619,7 @@ namespace PopulateSqlData
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(246, 136);
+            this.label7.Location = new System.Drawing.Point(251, 133);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 14;
@@ -622,17 +629,17 @@ namespace PopulateSqlData
             // 
             this.txtTrace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtTrace.Location = new System.Drawing.Point(384, 167);
+            this.txtTrace.Location = new System.Drawing.Point(384, 156);
             this.txtTrace.Multiline = true;
             this.txtTrace.Name = "txtTrace";
             this.txtTrace.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTrace.Size = new System.Drawing.Size(493, 230);
+            this.txtTrace.Size = new System.Drawing.Size(493, 240);
             this.txtTrace.TabIndex = 15;
             // 
             // btnSelectData
             // 
             this.btnSelectData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectData.Location = new System.Drawing.Point(496, 128);
+            this.btnSelectData.Location = new System.Drawing.Point(514, 120);
             this.btnSelectData.Name = "btnSelectData";
             this.btnSelectData.Size = new System.Drawing.Size(105, 29);
             this.btnSelectData.TabIndex = 16;
@@ -660,6 +667,24 @@ namespace PopulateSqlData
             this.loadingColumns.Text = "loadingCircle2";
             this.loadingColumns.Visible = false;
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(14, 89);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(85, 17);
+            this.radioButton1.TabIndex = 10;
+            this.radioButton1.Text = "String identiy";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(109, 87);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(241, 20);
+            this.textBox1.TabIndex = 9;
+            this.textBox1.Text = "M00000000001";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -671,12 +696,12 @@ namespace PopulateSqlData
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnSave2Sql);
             this.Controls.Add(this.numGenRecords);
+            this.Controls.Add(this.grGenString);
             this.Controls.Add(this.lvColumn);
             this.Controls.Add(this.grGenByDataColumn);
             this.Controls.Add(this.grGenNumber);
             this.Controls.Add(this.grGenDatetime);
             this.Controls.Add(this.grGenBit);
-            this.Controls.Add(this.grGenString);
             this.Controls.Add(this.loadingGrid);
             this.Controls.Add(this.loadingTable);
             this.Controls.Add(this.gvData);
@@ -756,6 +781,8 @@ namespace PopulateSqlData
         private TextBox txtTrace;
         private Button btnSelectData;
         private HaVaControl.LoadingCircle loadingColumns;
+        private RadioButton radioButton1;
+        private TextBox textBox1;
     }
 }
 

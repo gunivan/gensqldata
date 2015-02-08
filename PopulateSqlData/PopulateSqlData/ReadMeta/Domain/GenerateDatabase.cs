@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PopulateSqlData
+namespace PopulateSqlData.ReadMeta.Domain
 {
    public class GenerateDatabase
     {

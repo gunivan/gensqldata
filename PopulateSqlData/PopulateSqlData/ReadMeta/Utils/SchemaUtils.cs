@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using HaVaUtils;
 using PopulateSqlData.ReadMeta.Domain.Column;
 using PopulateSqlData.ReadMeta.Domain.Setting;
+using System.Diagnostics;
 
 namespace PopulateSqlData.ReadMeta.Utils
 {
@@ -35,10 +36,10 @@ namespace PopulateSqlData.ReadMeta.Utils
         };
         #endregion
 
-        public static List<Table> ReadSchemaTables()
+        public static List<Table> ReadSchemaTables(out int leafLevel)
         {
             LogUtils.Logs.Log("Begin load schemaTable");
-            //Lấy ra tất cả bảng         
+            //Get all table and child of itself
             var query = @"SELECT A.TABLE_NAME, B.CHILD FROM                 
                 (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') A 
                 LEFT OUTER JOIN
@@ -52,6 +53,7 @@ namespace PopulateSqlData.ReadMeta.Utils
             Sql.Fill(query, table);
             var tableList = new List<Table>();
 
+            //build table list
             foreach (DataRow row in table.Rows)
             {
                 var tableParent = FieldUtils.AsText(row, "TABLE_NAME");
@@ -72,10 +74,29 @@ namespace PopulateSqlData.ReadMeta.Utils
                         child = new Table(tableChild);
                         tableList.Add(child);
                     }
-                    parent.Children.Add(child);
+                    
+                    var existsChild = parent.Children.FirstOrDefault(tbl => tbl.Name == child.Name);
+                    if (null != existsChild)
+                    {
+                        parent.Children.Add(child);
+                    }
+                    parent.IsTopMaster = true;
                 }
             }
-            LogUtils.Logs.Log("Completed load schema table:{0} tables", tableList.Count);
+
+            //set level
+            leafLevel = 1;
+            foreach (var tbl in tableList)
+            {
+                if (tbl.IsTopMaster && tbl.Children.Count > 0)
+                {
+                    tbl.SetLevel();
+                    if (tbl.Level > leafLevel)
+                        leafLevel = tbl.Level;
+                }
+            }                        
+
+            LogUtils.Logs.Log("Completed load schema table:{0} tables, leafLevel:{1}", tableList.Count, leafLevel);
             foreach (var tbl in tableList)
             {
                 LogUtils.Logs.Log(tbl.ToString());
@@ -128,7 +149,7 @@ namespace PopulateSqlData.ReadMeta.Utils
                 else
                     column = new NormalColumn();
 
-                column.Name = FieldUtils.AsText(row, "COLUMN_NAME"); ;
+                column.Name = FieldUtils.AsText(row, "COLUMN_NAME");
                 column.UniqueName = FieldUtils.AsText(row, "UKNAME");
                 column.DataTypeName = FieldUtils.AsText(row, "DATA_TYPE");
                 column.MaxLength = FieldUtils.AsInt(row, "CHARACTER_MAXIMUM_LENGTH");
@@ -180,10 +201,29 @@ namespace PopulateSqlData.ReadMeta.Utils
                 }
                 columnList.Add(column);
             }
+
             LogUtils.Logs.Log("End reading schema column, table:{0}, {1} columns", tableName, columnList.Count);
             return columnList;
         }
 
+        public static void GetRefColumns(Table table)
+        {
+            var refColumns = table.Columns.FindAll(col => col is ReferenceColumn);
+
+            foreach (ReferenceColumn column in refColumns)
+            {
+                var cols = refColumns.FindAll(col => ((ReferenceColumn)col).CnstName.Equals(column.CnstName));
+                if (null != cols)
+                {
+                    var sb = new StringBuilder();
+                    foreach (var col in cols)
+                    {
+                        sb.AppendFormat("{0},", col.Name);
+                    }
+                    column.RefColumns = sb.ToString(0, sb.Length - 1);
+                }
+            }
+        }
         private static GenerateDataType GetGenerateType(String dataTypeName)
         {
             if (!MAP_DATA_TYPE.ContainsKey(dataTypeName))

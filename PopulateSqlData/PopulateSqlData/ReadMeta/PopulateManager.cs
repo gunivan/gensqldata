@@ -18,98 +18,18 @@ namespace PopulateSqlData.ReadMeta
 {
     public class PopulateManager
     {
+
+        /// <summary>
+        /// List Schema of Table in database
+        /// </summary>
         public List<Table> SchemaTables { get; set; }
-        public GenerateDatabase generateDatabase;
-
-        private static String DATA_PATH = Path.Combine(Application.StartupPath, "Data");
-
-        String GetFolderSetting(String server, String database)
-        {
-            StringBuilder sBuilder = new StringBuilder();
-            using (MD5 md5Hash = MD5.Create())
-            {
-                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(server + database));
-
-
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
-
-            }
-            return sBuilder.ToString();
-        }
-        public String GetStoredPath()
-        {
-            var info = Sql.GetConnectInfor();
-            return Path.Combine(DATA_PATH, GetFolderSetting(info.DataSource, info.InitialCatalog));
-        }
-        public String GetStoredFileName(String tableName)
-        {
-            var folder = GetStoredPath();
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-            return Path.Combine(folder, tableName + ".setting");
-        }
-        public void StoreSetting(Table table)
-        {
-            var folder = GetStoredPath();
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-            JsonUtils.Save(table, GetStoredFileName(table.Name));
-        }
-
-        public Table LoadSetting(Table table)
-        {
-            var tmp = JsonUtils.Load<Table>(GetStoredFileName(table.Name));
-            if (null != tmp)
-            {
-                table.Columns.ForEach(item =>
-                {
-                    var oldCol = tmp.Columns.FirstOrDefault(col => col.Name == item.Name);
-                    if (null != oldCol)
-                        item.Setting = oldCol.Setting;
-                });
-            }
-            return table;
-        }
-
-        public void StoreGenerateDatabase()
-        {
-            var info = Sql.GetConnectInfor();
-            generateDatabase = new GenerateDatabase();
-            generateDatabase.Server = info.DataSource;
-            generateDatabase.Database = info.InitialCatalog;
-            generateDatabase.Username = info.UserID;
-            generateDatabase.Password = info.Password;
-
-            if (!Directory.Exists(DATA_PATH))
-            {
-                Directory.CreateDirectory(DATA_PATH);
-            }
-            var fileName = GetFolderSetting(generateDatabase.Server, generateDatabase.Database) + ".conf";
-            var file = Path.Combine(DATA_PATH, fileName);
-            JsonUtils.Save(fileName, Path.Combine(DATA_PATH, "app.conf"));
-            JsonUtils.Save(generateDatabase, file);
-        }
-
-        public void LoadGenerateDatabase()
-        {
-            var active = JsonUtils.Load<String>(Path.Combine(DATA_PATH, "app.conf"));
-            if (String.IsNullOrEmpty(active))
-                return;
-            var file = Path.Combine(DATA_PATH, active);
-            generateDatabase = JsonUtils.Load<GenerateDatabase>(file);
-        }
+        public int LeafLevel { get; set; }
         public void LoadTables()
         {
-            SchemaTables = SchemaUtils.ReadSchemaTables();
-            var info = Sql.GetConnectInfor();
+            var leafLevel = 1;
+            SchemaTables = SchemaUtils.ReadSchemaTables(out leafLevel);
+            LeafLevel = leafLevel;
+
             Task.Factory.StartNew(() =>
             {
                 foreach (var table in SchemaTables)
@@ -119,6 +39,13 @@ namespace PopulateSqlData.ReadMeta
                         try
                         {
                             LoadColumn(table);
+
+                            SchemaUtils.GetRefColumns(table);
+                            foreach (var col in table.Columns)
+                            {
+                                if (!string.IsNullOrEmpty(col.RefColumns))
+                                    LogUtils.Logs.Log("Table: {0}, refCols :{1}", col.Name, col.RefColumns);
+                            }
                         }
                         catch (Exception e)
                         {
@@ -154,7 +81,7 @@ namespace PopulateSqlData.ReadMeta
 
         public void GenerateData(Table table)
         {
-            Log(String.Format("Load schema table for: {0}, records to generate: {1}", table.Name, table.MaxRecords));
+            Log("Load schema table for: {0}, records to generate: {1}", table.Name, table.MaxRecords);
             var sw = new Stopwatch();
             sw.Start();
             var mDt = new DataTable();
