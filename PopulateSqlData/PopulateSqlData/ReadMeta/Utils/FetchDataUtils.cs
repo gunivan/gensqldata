@@ -10,11 +10,12 @@ namespace PopulateSqlData.ReadMeta.Utils
 {
     public class FetchDataUtils
     {
-        public static List<List<Object>> Fetch(String table, Pair param, params String[] columns)
+        public static List<List<Object>> Fetch(long num, String table, Pair param, params String[] columns)
         {
             var list = new List<List<Object>>();
             var mDt = new DataTable();
             var sb = new StringBuilder();
+            sb.AppendFormat("Select top {0} ", num);
             if (columns.Length <= 0)
             {
                 sb.Append("*,");
@@ -24,9 +25,11 @@ namespace PopulateSqlData.ReadMeta.Utils
                 foreach (var col in columns)
                 {
                     sb.AppendFormat("{0},", columns);
-                }
+                };
+                sb.Remove(sb.Length - 1, 1);
             }
-            Sql.GetTable(mDt, table, sb.ToString(0, sb.Length - 1), param);
+            sb.AppendFormat(" From [{0}]", table);
+            Sql.Fill(sb.ToString(), mDt, param);
             foreach (DataRow row in mDt.Rows)
             {
                 var item = new List<Object>();
@@ -34,6 +37,7 @@ namespace PopulateSqlData.ReadMeta.Utils
                 {
                     item.Add(row[col]);
                 }
+                list.Add(item);
             }
             return list;
         }

@@ -39,6 +39,8 @@ namespace PopulateSqlData
             this.loadingTable = new HaVaControl.LoadingCircle();
             this.loadingGrid = new HaVaControl.LoadingCircle();
             this.grGenString = new System.Windows.Forms.GroupBox();
+            this.radGenStringRegex = new System.Windows.Forms.RadioButton();
+            this.txtGenStringRegex = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.radGenStringRandom = new System.Windows.Forms.RadioButton();
             this.radGenStringCollections = new System.Windows.Forms.RadioButton();
@@ -77,8 +79,7 @@ namespace PopulateSqlData
             this.txtTrace = new System.Windows.Forms.TextBox();
             this.btnSelectData = new System.Windows.Forms.Button();
             this.loadingColumns = new HaVaControl.LoadingCircle();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnTestRegex = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gvData)).BeginInit();
             this.grGenString.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenStringRandomTo)).BeginInit();
@@ -197,8 +198,8 @@ namespace PopulateSqlData
             // 
             // grGenString
             // 
-            this.grGenString.Controls.Add(this.radioButton1);
-            this.grGenString.Controls.Add(this.textBox1);
+            this.grGenString.Controls.Add(this.radGenStringRegex);
+            this.grGenString.Controls.Add(this.txtGenStringRegex);
             this.grGenString.Controls.Add(this.label3);
             this.grGenString.Controls.Add(this.radGenStringRandom);
             this.grGenString.Controls.Add(this.radGenStringCollections);
@@ -213,6 +214,24 @@ namespace PopulateSqlData
             this.grGenString.TabIndex = 5;
             this.grGenString.TabStop = false;
             this.grGenString.Text = "String";
+            // 
+            // radGenStringRegex
+            // 
+            this.radGenStringRegex.AutoSize = true;
+            this.radGenStringRegex.Location = new System.Drawing.Point(14, 89);
+            this.radGenStringRegex.Name = "radGenStringRegex";
+            this.radGenStringRegex.Size = new System.Drawing.Size(56, 17);
+            this.radGenStringRegex.TabIndex = 10;
+            this.radGenStringRegex.Text = "Regex";
+            this.radGenStringRegex.UseVisualStyleBackColor = true;
+            // 
+            // txtGenStringRegex
+            // 
+            this.txtGenStringRegex.Location = new System.Drawing.Point(109, 87);
+            this.txtGenStringRegex.Name = "txtGenStringRegex";
+            this.txtGenStringRegex.Size = new System.Drawing.Size(241, 20);
+            this.txtGenStringRegex.TabIndex = 9;
+            this.txtGenStringRegex.Text = "[0-9a-zA-Z]{20}";
             // 
             // label3
             // 
@@ -667,29 +686,23 @@ namespace PopulateSqlData
             this.loadingColumns.Text = "loadingCircle2";
             this.loadingColumns.Visible = false;
             // 
-            // radioButton1
+            // btnTestRegex
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(14, 89);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 17);
-            this.radioButton1.TabIndex = 10;
-            this.radioButton1.Text = "String identiy";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.btnTestRegex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTestRegex.Location = new System.Drawing.Point(938, 117);
+            this.btnTestRegex.Name = "btnTestRegex";
+            this.btnTestRegex.Size = new System.Drawing.Size(105, 29);
+            this.btnTestRegex.TabIndex = 18;
+            this.btnTestRegex.Text = "Test Regex";
+            this.btnTestRegex.UseVisualStyleBackColor = true;
+            this.btnTestRegex.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(109, 87);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 20);
-            this.textBox1.TabIndex = 9;
-            this.textBox1.Text = "M00000000001";
-            // 
-            // Form1
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1302, 401);
+            this.Controls.Add(this.btnTestRegex);
             this.Controls.Add(this.loadingColumns);
             this.Controls.Add(this.btnSelectData);
             this.Controls.Add(this.txtTrace);
@@ -707,7 +720,7 @@ namespace PopulateSqlData
             this.Controls.Add(this.gvData);
             this.Controls.Add(this.btnServer);
             this.Controls.Add(this.treeView1);
-            this.Name = "Form1";
+            this.Name = "FrmMain";
             this.ShowIcon = false;
             this.Text = "Populate Sql Data";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -781,8 +794,9 @@ namespace PopulateSqlData
         private TextBox txtTrace;
         private Button btnSelectData;
         private HaVaControl.LoadingCircle loadingColumns;
-        private RadioButton radioButton1;
-        private TextBox textBox1;
+        private RadioButton radGenStringRegex;
+        private TextBox txtGenStringRegex;
+        private Button btnTestRegex;
     }
 }
 

@@ -18,6 +18,9 @@ namespace PopulateSqlData.ReadMeta.Domain.Setting
         [DefaultValue(false)]
         public bool IsCollections { get; set; }
 
+        [JsonProperty("is_regex")]
+        public bool IsRegex { get; set; }
+        
         [JsonProperty("value")]
         [DefaultValue("")]
         public String Value { get; set; }

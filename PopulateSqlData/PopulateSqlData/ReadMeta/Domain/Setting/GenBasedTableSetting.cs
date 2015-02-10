@@ -22,6 +22,6 @@ namespace PopulateSqlData.ReadMeta.Domain.Setting
         public GenBasedTableSetting()
         {
             Columns = new List<string>();
-        }
+        }       
     }
 }

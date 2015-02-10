@@ -5,16 +5,27 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulateSqlData", "PopulateSqlData\PopulateSqlData.csproj", "{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fare", "..\..\RandomBaseRegex\Fare\Src\Fare\Fare.csproj", "{24033E0E-0304-4F06-94CD-6F6416ECA509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Verify|Any CPU = Verify|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Verify|Any CPU.ActiveCfg = Release|Any CPU
+		{8DD46272-CB4B-42D3-B401-3D0F5CB72F7F}.Verify|Any CPU.Build.0 = Release|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Verify|Any CPU.ActiveCfg = Verify|Any CPU
+		{24033E0E-0304-4F06-94CD-6F6416ECA509}.Verify|Any CPU.Build.0 = Verify|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

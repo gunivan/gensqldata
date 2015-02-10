@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PopulateSqlData.ReadMeta.Domain.Setting;
+using Fare;
 
 namespace PopulateSqlData.ReadMeta.Domain.Column
 {
@@ -58,6 +59,8 @@ namespace PopulateSqlData.ReadMeta.Domain.Column
 
         [JsonIgnore]
         public String RefColumns { get; set; }
+
+        public Xeger xeger { get; set; }
 
         public virtual object NextValue()
         {
@@ -142,10 +145,23 @@ namespace PopulateSqlData.ReadMeta.Domain.Column
                     }
                     value = setting.TemplateString[random.Next(0, setting.TemplateString.Length)];
                 }
+                else if (setting.IsRegex)
+                {
+                    if (null == xeger)
+                    {
+                        xeger = new Xeger(setting.Value, random);
+                    }
+                    value = xeger.Generate();
+
+                }
                 else
                 {
                     value = RandomUtils.NextString(random.Next(Math.Min(setting.Min, MaxLength), Math.Min(MaxLength, setting.Max)));
                 }
+            }
+            else if (Setting is GenBasedTableSetting)
+            {
+                var setting = Setting as GenBasedTableSetting;
             }
             CurrentValue = value;
             return value;
@@ -154,8 +170,7 @@ namespace PopulateSqlData.ReadMeta.Domain.Column
         {
             lock (this)
             {
-                var value = NextValue();
-                row[Name] = value;
+                row[Name] = NextValue();
             }
             return row;
         }

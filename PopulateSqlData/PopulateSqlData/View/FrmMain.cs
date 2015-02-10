@@ -14,6 +14,7 @@ using PopulateSqlData.ReadMeta.Domain.Setting;
 using System.IO;
 using System.Diagnostics;
 using HaVaData;
+using Fare;
 namespace PopulateSqlData
 {
 
@@ -79,7 +80,7 @@ namespace PopulateSqlData
                 manager.GenerateData(currentTable);
                 Utils.VisibleLoading(loadingGrid, false);
             });
-        }         
+        }
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             treeView1_AfterCheck(sender, e);
@@ -262,21 +263,26 @@ namespace PopulateSqlData
                         var setting = column.Setting as GenStringSetting;
                         if (null != setting)
                         {
-                            radGenStringIdentity.Checked = setting.IsIdentity;
-                            radGenStringCollections.Checked = setting.IsCollections;
-                            radGenNumRandom.Checked = setting.IsRandom;
                             if (setting.IsIdentity)
                             {
+                                radGenStringIdentity.Checked = setting.IsIdentity;
                                 txtGenStringIdentity.Text = setting.Value;
                             }
                             if (setting.IsCollections)
                             {
+                                radGenStringCollections.Checked = setting.IsCollections;
                                 txtGenStringCollections.Text = setting.Value;
                             }
                             if (setting.IsRandom)
                             {
+                                radGenStringRandom.Checked = setting.IsRandom;
                                 numGenStringRandomFrom.Value = setting.Min;
                                 numGenStringRandomTo.Value = setting.Max;
+                            }
+                            if (setting.IsRegex)
+                            {
+                                radGenStringRegex.Checked = setting.IsRegex;
+                                txtGenStringRegex.Text = setting.Value;
                             }
                         }
                     }
@@ -308,7 +314,7 @@ namespace PopulateSqlData
                             radGenNumStartWith.Checked = !setting.IsRandom;
                             numGenNumStart.Value = setting.Min;
                             numGenNumRandomFrom.Value = setting.Min;
-                            numGenNumRandomTo.Value = setting.Max;                            
+                            numGenNumRandomTo.Value = setting.Max;
                         }
                     }
                     break;
@@ -392,7 +398,8 @@ namespace PopulateSqlData
                         {
                             setting.IsIdentity = radGenStringIdentity.Checked;
                             setting.IsCollections = radGenStringCollections.Checked;
-                            setting.IsRandom = radGenNumRandom.Checked;
+                            setting.IsRandom = radGenStringRandom.Checked;
+                            setting.IsRegex = radGenStringRegex.Checked;
                             if (setting.IsIdentity)
                             {
                                 setting.Value = txtGenStringIdentity.Text;
@@ -405,6 +412,10 @@ namespace PopulateSqlData
                             {
                                 setting.Min = (int)numGenStringRandomFrom.Value;
                                 setting.Max = (int)numGenStringRandomTo.Value;
+                            }
+                            if (setting.IsRegex)
+                            {
+                                setting.Value = txtGenStringRegex.Text;
                             }
                         }
                     }
@@ -516,6 +527,15 @@ namespace PopulateSqlData
             foreach (var item in items)
             {
                 lvColumn.Items.Add(item);
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var random = new Random();
+            var xeger = new Xeger(txtGenStringRegex.Text, random);
+            for (int i = 0; i < 100; i++)
+            {
+                Debug.Print(xeger.Generate());
             }
         }
     }
