@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fare, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Fare.dll</HintPath>
+    </Reference>
     <Reference Include="HaVaData, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\HaVaData.dll</HintPath>
@@ -141,12 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ReadMeta\Service\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\RandomBaseRegex\Fare\Src\Fare\Fare.csproj">
-      <Project>{24033e0e-0304-4f06-94cd-6f6416eca509}</Project>
-      <Name>Fare</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
